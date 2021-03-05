@@ -18,10 +18,16 @@ defmodule CassandraGraphqlWeb.Router do
   scope "/" do
     pipe_through :graphql
 
-    match :*, "/healthz", ApiController, :healthz
     match :*, "/", Absinthe.Plug.GraphiQL, schema: GraphQL.Schema, json_codec: Phoenix.json_library(), interface: :simple
     forward "/graphql", Absinthe.Plug, schema: GraphQL.Schema, json_codec: Phoenix.json_library()
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: GraphQL.Schema, json_codec: Phoenix.json_library()
+  end
+
+  scope "/" do
+    pipe_through :api
+
+    match :*, "/healthz", ApiController, :healthz
+    match :*, "/items", ApiController, :items
   end
 
   # Enables LiveDashboard only for development

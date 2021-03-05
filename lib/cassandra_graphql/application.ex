@@ -12,9 +12,9 @@ defmodule CassandraGraphql.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: CassandraGraphql.PubSub},
       # Start the Endpoint (http/https)
-      CassandraGraphqlWeb.Endpoint
-      # Start a worker by calling: CassandraGraphql.Worker.start_link(arg)
-      # {CassandraGraphql.Worker, arg}
+      CassandraGraphqlWeb.Endpoint,
+      # Start Xandra
+      {Xandra, name: :xandra, pool_size: 10},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -30,3 +30,4 @@ defmodule CassandraGraphql.Application do
     :ok
   end
 end
+

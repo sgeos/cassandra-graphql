@@ -23,6 +23,14 @@ defmodule CassandraGraphqlWeb.GraphQL.Types do
     field :datetime, :datetime
   end
 
+  @desc """
+  Item
+  """
+  object :item do
+    field :item_id, :string
+    field :category_list, list_of(:string)
+  end
+
   defp parse_ok(input), do: {:ok, input}
 
   @desc """

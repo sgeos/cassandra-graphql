@@ -28,5 +28,19 @@ defmodule CassandraGraphqlWeb.ApiController do
     |> graphql(variables, conn)
     json(conn, result)
   end
+
+  def items(conn, _params) do
+    variables = %{}
+    result = """
+      query Items {
+        items: itemList {
+          itemId
+          categoryList
+        }
+      }
+    """
+    |> graphql(variables, conn)
+    json(conn, result)
+  end
 end
 
