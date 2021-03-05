@@ -1,12 +1,27 @@
 defmodule CassandraGraphqlWeb.Router do
   use CassandraGraphqlWeb, :router
+  alias CassandraGraphqlWeb.{ApiController, GraphQL}
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  pipeline :graphql do
+    plug :accepts, ["json", "graphql"]
+    plug CassandraGraphqlWeb.Plug.AbsintheRemoteIp
+  end
+
   scope "/api", CassandraGraphqlWeb do
     pipe_through :api
+  end
+
+  scope "/" do
+    pipe_through :graphql
+
+    match :*, "/healthz", ApiController, :healthz
+    match :*, "/", Absinthe.Plug.GraphiQL, schema: GraphQL.Schema, json_codec: Phoenix.json_library(), interface: :simple
+    forward "/graphql", Absinthe.Plug, schema: GraphQL.Schema, json_codec: Phoenix.json_library()
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: GraphQL.Schema, json_codec: Phoenix.json_library()
   end
 
   # Enables LiveDashboard only for development
@@ -25,3 +40,4 @@ defmodule CassandraGraphqlWeb.Router do
     end
   end
 end
+

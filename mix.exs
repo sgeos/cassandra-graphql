@@ -40,8 +40,10 @@ defmodule CassandraGraphql.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:absinthe, "~> 1.5.0"},
-      {:xandra, "~> 0.13.1"}
+      {:absinthe, "~> 1.6"},
+      {:absinthe_plug, "~> 1.5"},
+      {:timex, "~> 3.6"},
+      {:xandra, "~> 0.13"}
     ]
   end
 
